@@ -34,6 +34,12 @@ class DailyTrafficNotification
     public function sendDailyNotification()
     {
         foreach ($this->accounts as $account) {
+            // 检查是否启用通知
+            if (isset($account['enableNotification']) && !$account['enableNotification']) {
+                echo "跳过账户 {$account['accountName']}：未启用通知" . PHP_EOL;
+                continue;
+            }
+
             // 验证 AK, SK 和 InstanceId
             if (!$this->validateCredentialsAndInstance($account)) {
                 continue;

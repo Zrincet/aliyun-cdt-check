@@ -7,7 +7,8 @@ return [
             'AccessKeySecret' => '***',      // 阿里云 AccessKeySecret
             'regionId' => 'cn-hongkong',     // 阿里云 regionId, cityId 请参考 https://help.aliyun.com/document_detail/40654.html
             'instanceId' => 'i-***',         // 阿里云实例ID, https://ecs.console.aliyun.com/server/region/cn-hongkong?accounttraceid#/ 查看
-            'maxTraffic' => 180              // 设置流量限制，单位为G
+            'maxTraffic' => 180,             // 设置流量限制，单位为G
+            'enableNotification' => true    // 是否启用每日通知，false表示不通知，默认不填时为true
         ]
         // [
         //     'accountName' => 'xxxx',
@@ -15,7 +16,8 @@ return [
         //     'AccessKeySecret' => 'AS',
         //     'regionId' => 'cn-hongkong',
         //     'instanceId' => 'i-j6cj3uXXX',
-        //     'maxTraffic' => 200 // 设置流量限制
+        //     'maxTraffic' => 200, // 设置流量限制
+        //     'enableNotification' => true  // 是否启用每日通知
         // ]
 		//可配置多个账户（每个数组之间用,分割），不用请删掉。
     ],
