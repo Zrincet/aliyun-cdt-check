@@ -9,7 +9,7 @@ RUN apk add --no-cache tzdata && \
     echo "Asia/Shanghai" > /etc/timezone && \
     apk del tzdata
 
-RUN echo "*/5 * * * * php /app/aliyun-cdt-check.php > /dev/null 2>&1" > /etc/crontabs/root && \
+RUN echo "*/30 * * * * php /app/aliyun-cdt-check.php > /dev/null 2>&1" > /etc/crontabs/root && \
     echo "1 8 * * * php /app/dailyjob.php > /dev/null 2>&1" >> /etc/crontabs/root
 
 CMD ["crond", "-f"]
