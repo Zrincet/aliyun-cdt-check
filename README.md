@@ -25,71 +25,70 @@ services:
     image: alanoo/aliyun-cdt-check:latest
     network_mode: bridge
     volumes:
-      - /appdata/aliyun-cdt-check/config.php:/app/config.php
+      - /appdata/aliyun-cdt-check/config.json:/app/config.json
     restart: always
 ```
-config.php配置如下，按需修改
-```php
-<?php
-return [
-    'Accounts' => [
-        [
-            'accountName' => 'xxxx',         // 随意填，用于区分每个服务器
-            'AccessKeyId' => '***',          // 阿里云 AccessKeyId
-            'AccessKeySecret' => '***',      // 阿里云 AccessKeySecret
-            'regionId' => 'cn-hongkong',     // 阿里云 regionId, cityId 请参考 https://help.aliyun.com/document_detail/40654.html
-            'instanceId' => 'i-***',         // 阿里云实例ID, https://ecs.console.aliyun.com/server/region/cn-hongkong?accounttraceid#/ 查看
-            'maxTraffic' => 180              // 设置流量限制，单位为G
-        ]
-        // [
-        //     'accountName' => 'xxxx',
-        //     'AccessKeyId' => 'AK',
-        //     'AccessKeySecret' => 'AS',
-        //     'regionId' => 'cn-hongkong',
-        //     'instanceId' => 'i-j6cj3uXXX',
-        //     'maxTraffic' => 200 // 设置流量限制
-        // ]
-		//可配置多个账户（每个数组之间用,分割），不用请删掉。
+config.json配置如下，按需修改
+```json
+{
+    "Accounts": [
+        {
+            "accountName": "xxxx",
+            "AccessKeyId": "***",
+            "AccessKeySecret": "***",
+            "regionId": "cn-hongkong",
+            "instanceId": "i-***",
+            "maxTraffic": 180,
+            "enableNotification": true
+        }
     ],
-    'Notification' => [
+    "Notification": {
+        "title": "CDT流量统计",
 
-        'title' => 'CDT流量统计',         // 标题
+        "enableEmail": false,
+        "email": "your-notification-email@example.com",
+        "host": "smtp.example.com",
+        "username": "your-email-username",
+        "password": "your-email-password",
+        "port": 587,
+        "secure": "tls",
 
-        'enableEmail' => false,         // 邮件通知开关
-        'email' => 'your-notification-email@example.com',
-        'host' => 'smtp.example.com',
-        'username' => 'your-email-username',
-        'password' => 'your-email-password',
-        'port' => 587,
-        'secure' => 'tls',
-       
-        'enableBark' => false,          // Bark 通知开关
-        'barkUrl' => 'https://api.day.app/XXXXXXXX', 
+        "enableBark": false,
+        "barkUrl": "https://api.day.app/XXXXXXXX",
 
-        'enableWebhook' => false,          // webhook 通知开关
-        'webhookId' => '1',               // 通知通道id，按需配置，没有则无需修改
-        'webhookUrl' => 'https://mr.xxxx/api/plugins/notifyapi/send_notify?&access_key=xxxxxxx', 
+        "enableWebhook": false,
+        "webhookId": "1",
+        "webhookUrl": "https://mr.xxxx/api/plugins/notifyapi/send_notify?&access_key=xxxxxxx",
 
-        'enableQywx' => true,        // 企业微信 通知开关
-        'touser' => '@all',           // 企业微信通知用户
-        'corpid' => 'xxx',            // 企业微信企业ID
-        'corpsecret' => 'xxx',        // 企业微信应用Secret
-        'agentid' => '1000002',       // 企业微信应用AgentId
-        'picUrl' => 'https://raw.githubusercontent.com/Alano-i/aliyun-cdt-check/refs/heads/main/aliyuncdt.png',        // 企业微信通知封面图
-        'baseApiUrl' => 'https://qyapi.weixin.qq.com',     // 企业微信API地址，如有代理填代理地址，默认：https://qyapi.weixin.qq.com
+        "enableQywx": true,
+        "touser": "@all",
+        "corpid": "xxx",
+        "corpsecret": "xxx",
+        "agentid": "1000002",
+        "picUrl": "https://raw.githubusercontent.com/Alano-i/aliyun-cdt-check/refs/heads/main/aliyuncdt.png",
+        "baseApiUrl": "https://qyapi.weixin.qq.com",
 
-
-        'enableTG' => false,            // Telegram 通知开关
-        'tgBotToken' => 'your-telegram-bot-token',
-        'tgChatId' => 'your-telegram-chat-id'
-    ]
-];
+        "enableTG": false,
+        "tgBotToken": "your-telegram-bot-token",
+        "tgChatId": "your-telegram-chat-id"
+    }
+}
 ```
 
+### 配置说明
+- `Accounts`：可配置多个账户，每个账户包含阿里云 AccessKey、实例信息和流量限制
+  - `accountName`：随意填，用于区分每个服务器
+  - `AccessKeyId`：阿里云 AccessKeyId
+  - `AccessKeySecret`：阿里云 AccessKeySecret
+  - `regionId`：阿里云 regionId，请参考 https://help.aliyun.com/document_detail/40654.html
+  - `instanceId`：阿里云实例ID
+  - `maxTraffic`：设置流量限制，单位为GB
+  - `enableNotification`：是否启用每日通知，false表示不通知，默认为true
+- `Notification`：通知配置，支持邮件、Bark、Webhook、企业微信、Telegram
 
 ## 使用方法
-- 修改config.php文件内容
+- 修改config.json文件内容
 - 填写你的账号AK AS ，实例ID ，CDT总流量，通知方式，记得启用
 
 ## 检测是否运行成功
-进入容器后，输入命令`php aliyun-cdt-check.php`检测是否执行成功，输入命令`php dailyjob.php`测试通知是否正常
+进入容器后，输入命令`python3 aliyun_cdt_check.py`检测是否执行成功，输入命令`python3 dailyjob.py`测试通知是否正常
