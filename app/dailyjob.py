@@ -70,6 +70,11 @@ def send_daily_notification():
             print(f"跳过账户 {account['accountName']}：未启用通知")
             continue
 
+        # 检查是否仅在防火墙切换时通知
+        if account.get('onlyNotifyOnToggle', False):
+            print(f"跳过账户 {account['accountName']}：仅在防火墙切换时通知")
+            continue
+
         # 验证 AK/SK 和实例 ID
         if not validate_credentials_and_instance(account, notification_config):
             continue

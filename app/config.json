@@ -7,7 +7,8 @@
             "regionId": "cn-hongkong",
             "instanceId": "i-***",
             "maxTraffic": 180,
-            "enableNotification": true
+            "enableNotification": true,
+            "onlyNotifyOnToggle": false
         }
     ],
     "Notification": {
