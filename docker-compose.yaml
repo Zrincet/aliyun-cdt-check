@@ -4,5 +4,5 @@ services:
     image: alanoo/aliyun-cdt-check:latest
     network_mode: bridge
     volumes:
-      - /appdata/aliyun-cdt-check/config.php:/app/config.php
+      - /appdata/aliyun-cdt-check/config.json:/app/config.json
     restart: always
