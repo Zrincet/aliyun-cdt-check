@@ -361,6 +361,8 @@ def send_qywx_notification(message, title, touser, corpid, corpsecret, agentid, 
         }
         resp = requests.post(send_url, json=postdata, timeout=10, verify=False)
         response = resp.json()
+        if response.get('errcode') != 0:
+            print(f'企业微信通知接口返回错误: {response}')
         return response.get('errcode') == 0
     except Exception as e:
         print(f'企业微信通知失败: {e}')
