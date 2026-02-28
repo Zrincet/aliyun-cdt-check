@@ -39,7 +39,8 @@ config.json配置如下，按需修改
             "regionId": "cn-hongkong",
             "instanceId": "i-***",
             "maxTraffic": 180,
-            "enableNotification": true
+            "enableNotification": true,
+            "onlyNotifyOnToggle": false
         }
     ],
     "Notification": {
@@ -84,6 +85,7 @@ config.json配置如下，按需修改
   - `instanceId`：阿里云实例ID
   - `maxTraffic`：设置流量限制，单位为GB
   - `enableNotification`：是否启用每日通知，false表示不通知，默认为true
+  - `onlyNotifyOnToggle`：是否仅在防火墙因流量限制自动切换时发送通知，true表示不发送每日通知，仅在防火墙切换时通知，默认为false
 - `Notification`：通知配置，支持邮件、Bark、Webhook、企业微信、Telegram
 
 ## 使用方法
